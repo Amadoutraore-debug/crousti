@@ -3,10 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Crousti Chicken</title>
+<title>DORÉ Chicken – Bouaké</title>
+<meta name="description" content="DORÉ Chicken, poulet frit croustillant à Bouaké. Commandez sur WhatsApp, livraison ou à emporter.">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
 <style>
-:root{--red:#d7261e;--red-dark:#7a100c;--cream:#fbf1e6;--cream2:#f6e4d3;--text:#1d1d1d;--muted:#7a7a7a;--orange:#f08a1c;--star:#f5a623;--r:22px}
+:root{--red:#d7261e;--red-dark:#7a100c;--cream:#fbf1e6;--cream2:#f6e4d3;--text:#1d1d1d;--muted:#7a7a7a;--orange:#f08a1c;--star:#f5a623;--green:#25d366;--r:22px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:Poppins,sans-serif;background:var(--cream);color:var(--text)}
@@ -14,32 +15,39 @@ img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer}
 .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+section[id],div[id]{scroll-margin-top:100px}
 
-/* Header */
+/* En-tête */
 header{position:sticky;top:0;z-index:20;background:rgba(251,241,230,.92);backdrop-filter:blur(10px)}
 .head{display:flex;align-items:center;gap:18px;height:84px}
 .sq{width:48px;height:48px;border-radius:15px;background:#fff;display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.06);position:relative;flex-shrink:0;border:0}
 .sq svg{width:22px;height:22px}
 .badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:grid;place-items:center;padding:0 4px}
+.badge:empty,.badge.zero{display:none}
 .brand{line-height:1.15}
 .brand small{font-size:12px;display:block}
 .logo{font-family:Oswald,sans-serif;font-style:italic;color:var(--red);font-size:28px;letter-spacing:.5px;font-weight:700}
+.logo span{color:var(--orange)}
 .brand .tag{font-size:12px}
 .mainnav{display:flex;gap:26px;margin-left:24px;font-size:14px;font-weight:500}
-.mainnav a:hover,.mainnav a.on{color:var(--red)}
-.search{flex:1;display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:0 16px;height:48px;box-shadow:0 4px 14px rgba(0,0,0,.05);max-width:380px;margin-left:auto}
-.search input{border:0;outline:0;font:inherit;font-size:13px;flex:1;background:none}
+.mainnav a:hover{color:var(--red)}
+.search{flex:1;display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:0 6px 0 16px;height:48px;box-shadow:0 4px 14px rgba(0,0,0,.05);max-width:380px;margin-left:auto}
+.search input{border:0;outline:0;font:inherit;font-size:13px;flex:1;background:none;min-width:0}
+.search select{border:0;background:var(--cream);border-radius:10px;font:inherit;font-size:12px;padding:8px;outline:0;cursor:pointer}
 .burger-btn{display:none}
 
-/* Hero */
+/* Bannière */
 .hero{margin-top:10px;border-radius:28px;background:radial-gradient(circle at 72% 45%,#c8261d,var(--red-dark) 72%);color:#fff;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1.1fr;min-height:420px}
 .hero .txt{padding:56px 0 56px 56px;align-self:center;position:relative;z-index:2}
 .hero .lt{font-size:12px;font-weight:600;letter-spacing:1px}
-.hero h1{font-family:Oswald,sans-serif;font-size:64px;line-height:1.02;margin:12px 0 16px}
+.hero h1{font-family:Oswald,sans-serif;font-size:62px;line-height:1.02;margin:12px 0 16px}
 .hero p{font-size:16px;line-height:1.5;opacity:.95}
 .btn{display:inline-flex;align-items:center;gap:12px;background:var(--red);color:#fff;border:0;border-radius:30px;padding:10px 10px 10px 22px;font-weight:600;font-size:15px;margin-top:24px;box-shadow:0 6px 16px rgba(0,0,0,.2);transition:.2s}
 .btn:hover{transform:translateY(-2px)}
 .btn i{width:28px;height:28px;background:#fff;color:var(--red);border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700}
+.btn.wa{background:var(--green)}
+.btn.wa i{color:var(--green)}
+.btn.ghost{background:#fff;color:var(--text);box-shadow:none;border:1px solid #e6dcd2}
 .hero .pic{position:relative}
 .hero .slide{position:absolute;inset:0;opacity:0;transition:opacity .8s}
 .hero .slide.on{opacity:1}
@@ -48,7 +56,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(251,241,230,.92);backdro
 .dots button{width:8px;height:8px;border-radius:5px;background:#fff;border:0;opacity:.85;transition:.3s;padding:0}
 .dots button.on{background:var(--red);width:22px;opacity:1}
 
-/* Categories */
+/* Catégories */
 .cats{display:flex;justify-content:space-between;gap:14px;padding:34px 0 10px;overflow-x:auto;scrollbar-width:none}
 .cat{text-align:center;font-size:14px;flex-shrink:0;cursor:pointer;background:none;border:0;color:inherit}
 .cat .c{width:96px;height:96px;border-radius:50%;background:#fff;overflow:hidden;margin:0 auto 10px;box-shadow:0 6px 16px rgba(0,0,0,.06);border:3px solid transparent;transition:.2s;padding:4px}
@@ -57,12 +65,11 @@ header{position:sticky;top:0;z-index:20;background:rgba(251,241,230,.92);backdro
 .cat.on .c{border-color:var(--red)}
 .cat.on{color:var(--red);font-weight:600}
 
-/* Section head */
 .sec{display:flex;justify-content:space-between;align-items:center;padding:34px 0 18px}
 .sec h2{font-size:26px;font-weight:600}
 .sec a{color:var(--red);font-size:15px;font-weight:500}
 
-/* Cards */
+/* Cartes produits */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
 .card{background:#fff;border-radius:var(--r);padding:14px;box-shadow:0 6px 18px rgba(0,0,0,.05);position:relative;transition:.25s;display:flex;flex-direction:column}
 .card:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(0,0,0,.09)}
@@ -77,12 +84,13 @@ header{position:sticky;top:0;z-index:20;background:rgba(251,241,230,.92);backdro
 .card .d{font-size:13px;color:var(--muted);line-height:1.45;margin:4px 0 8px;flex:1}
 .card .r{font-size:13px;color:var(--muted)}
 .card .r b{color:var(--star)}
-.card .p{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
-.card .p strong{font-size:22px}
-.plus{width:38px;height:38px;border-radius:50%;background:var(--red);color:#fff;border:0;font-size:22px;line-height:1;transition:.2s}
+.card .p{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:8px}
+.card .p strong{font-size:20px;white-space:nowrap}
+.card .p strong small{font-size:12px;font-weight:600}
+.plus{width:38px;height:38px;border-radius:50%;background:var(--red);color:#fff;border:0;font-size:22px;line-height:1;transition:.2s;flex-shrink:0}
 .plus:hover{transform:scale(1.1)}
 
-/* Offer */
+/* Offre */
 .offer{margin-top:44px;border-radius:28px;background:linear-gradient(90deg,#f8e6d6,#f1d3bb);padding:40px 48px;position:relative;overflow:hidden;display:flex;align-items:center;min-height:220px}
 .offer .t{position:relative;z-index:2}
 .offer small{color:var(--red);font-size:13px;font-weight:600;letter-spacing:.5px}
@@ -91,57 +99,88 @@ header{position:sticky;top:0;z-index:20;background:rgba(251,241,230,.92);backdro
 .offer .ph{position:absolute;right:140px;top:0;bottom:0;width:45%;-webkit-mask-image:linear-gradient(90deg,transparent,#000 35%);mask-image:linear-gradient(90deg,transparent,#000 35%)}
 .offer .ph img{width:100%;height:100%;object-fit:cover}
 .offer .pct{position:absolute;right:36px;top:50%;transform:translateY(-50%);width:130px;height:130px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-content:center;text-align:center;line-height:1;font-weight:800;font-size:40px;box-shadow:0 10px 24px rgba(215,38,30,.35);z-index:2}
-.offer .pct span{font-size:20px;display:block;margin-top:4px}
+.offer .pct span{font-size:16px;display:block;margin-top:4px}
 
-/* Footer */
+/* Nous trouver */
+.find{display:grid;grid-template-columns:1fr 1.3fr;gap:24px;margin-top:20px}
+.info{background:#fff;border-radius:var(--r);padding:28px;box-shadow:0 6px 18px rgba(0,0,0,.05)}
+.info h3{font-size:20px;margin-bottom:16px}
+.row{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #f3ebe3}
+.row:last-of-type{border:0}
+.row .ic{width:42px;height:42px;border-radius:12px;background:var(--cream);display:grid;place-items:center;font-size:19px;flex-shrink:0}
+.row b{display:block;font-size:14px}
+.row span,.row a{font-size:14px;color:var(--muted)}
+.row a:hover{color:var(--red)}
+.info .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.info .btns .btn{margin:0;font-size:14px}
+.map{border-radius:var(--r);overflow:hidden;min-height:360px;box-shadow:0 6px 18px rgba(0,0,0,.05);background:var(--cream2)}
+.map iframe{width:100%;height:100%;min-height:360px;border:0}
+
+/* Pied de page */
 footer{margin-top:70px;background:#1d1414;color:#d9cfc6;padding:50px 0 30px;font-size:14px}
-.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:30px}
 footer h5{color:#fff;font-size:15px;margin-bottom:12px}
 footer li{list-style:none;margin:7px 0}
 footer a:hover{color:#fff}
 .copy{border-top:1px solid #3a2d2d;margin-top:30px;padding-top:20px;font-size:12px;opacity:.7}
 
-/* Cart drawer */
+/* Tiroirs / fenêtres */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.3s;z-index:40}
 .ov.on{opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:380px;max-width:92vw;background:#fff;z-index:50;transform:translateX(100%);transition:.35s;display:flex;flex-direction:column}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:400px;max-width:94vw;background:#fff;z-index:50;transform:translateX(100%);transition:.35s;display:flex;flex-direction:column}
+.drawer.left{right:auto;left:0;transform:translateX(-100%);width:300px}
 .drawer.on{transform:none}
-.drawer .dh{display:flex;justify-content:space-between;align-items:center;padding:22px;border-bottom:1px solid #eee}
-.drawer .dh h3{font-size:20px}
-.drawer .x{border:0;background:none;font-size:26px}
-.items{flex:1;overflow:auto;padding:12px 22px}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid #eee}
+.dh h3{font-size:20px}
+.x{border:0;background:none;font-size:28px;line-height:1}
+.items{flex:1;overflow:auto;padding:8px 22px}
 .it{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #f2f2f2}
-.it img{width:62px;height:62px;border-radius:12px;object-fit:cover}
+.it img{width:58px;height:58px;border-radius:12px;object-fit:cover}
 .it div{flex:1;font-size:14px}
 .it small{color:var(--muted)}
 .qty{display:flex;align-items:center;gap:8px}
 .qty button{width:26px;height:26px;border-radius:50%;border:1px solid #ddd;background:#fff}
-.dfoot{padding:22px;border-top:1px solid #eee}
-.dfoot .tot{display:flex;justify-content:space-between;font-size:18px;font-weight:700;margin-bottom:14px}
+.form{display:grid;gap:10px;padding-top:14px}
+.form label{font-size:12px;font-weight:600}
+.form input,.form textarea{width:100%;border:1px solid #e3d9cf;border-radius:12px;padding:10px 12px;font:inherit;font-size:14px;margin-top:4px;outline:0}
+.form input:focus,.form textarea:focus{border-color:var(--red)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.seg button{border:1px solid #e3d9cf;background:#fff;border-radius:12px;padding:10px;font-size:13px;font-weight:500}
+.seg button.on{border-color:var(--red);background:#fdecea;color:var(--red)}
+.dfoot{padding:18px 22px;border-top:1px solid #eee;display:grid;gap:10px}
+.dfoot .tot{display:flex;justify-content:space-between;font-size:17px;font-weight:700}
+.dfoot .sub{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
 .dfoot .btn{width:100%;justify-content:center;margin:0}
 .empty{text-align:center;color:var(--muted);padding:40px 0}
+.side a{display:block;padding:14px 22px;border-bottom:1px solid #f3f3f3;font-weight:500}
+.side a:hover{color:var(--red)}
+.notif{padding:14px 22px;border-bottom:1px solid #f3f3f3;font-size:14px}
+.notif b{display:block}
+.notif small{color:var(--muted)}
 
-.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(30px);background:#222;color:#fff;padding:12px 20px;border-radius:24px;font-size:14px;transition:.3s;opacity:0;z-index:60;pointer-events:none}
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(30px);background:#222;color:#fff;padding:12px 20px;border-radius:24px;font-size:14px;transition:.3s;opacity:0;z-index:60;pointer-events:none;text-align:center;max-width:90vw}
 .toast.show{transform:translateX(-50%);opacity:1}
+.wafloat{position:fixed;right:22px;bottom:22px;width:58px;height:58px;border-radius:50%;background:var(--green);display:grid;place-items:center;box-shadow:0 8px 20px rgba(37,211,102,.45);z-index:25}
+.wafloat svg{width:30px;height:30px;fill:#fff}
 
-/* Mobile bottom nav */
 .bnav{display:none}
 
 @media(max-width:980px){
   .mainnav{display:none}
+  .burger-btn{display:grid}
   .hero{grid-template-columns:1fr}
   .hero .txt{padding:36px 28px 40px}
   .hero .pic{position:absolute;inset:0 0 0 35%;opacity:.95}
   .hero h1{font-size:46px}
+  .find{grid-template-columns:1fr}
   .fgrid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:640px){
   .wrap{padding:0 16px}
   .head{height:auto;padding:14px 0;flex-wrap:wrap;gap:12px}
-  .burger-btn{display:grid}
   .brand{flex:1}
   .search{order:5;max-width:none;flex-basis:100%;margin:0}
-  .hero{min-height:260px;border-radius:22px}
+  .hero{min-height:270px;border-radius:22px}
   .hero .txt{padding:24px 20px 34px}
   .hero h1{font-size:32px}
   .hero p{font-size:12px}
@@ -157,17 +196,20 @@ footer a:hover{color:#fff}
   .heart{top:14px;right:14px;width:28px;height:28px;font-size:14px}
   .card h3{font-size:13px;margin-top:10px}
   .card .d,.card .r{font-size:11px}
-  .card .p strong{font-size:16px}
+  .card .p strong{font-size:14px}
+  .card .p strong small{font-size:10px}
   .plus{width:30px;height:30px;font-size:18px}
-  .offer{padding:22px;min-height:150px;margin-top:28px;border-radius:20px}
+  .offer{padding:22px;min-height:160px;margin-top:28px;border-radius:20px}
   .offer h4{font-size:22px}.offer p{font-size:12px}.offer small{font-size:10px}
   .offer .btn{font-size:12px;padding:6px 6px 6px 14px;margin-top:12px}
   .offer .btn i{width:20px;height:20px}
   .offer .ph{right:60px;width:45%}
   .offer .pct{width:72px;height:72px;font-size:22px;right:14px}
-  .offer .pct span{font-size:12px}
+  .offer .pct span{font-size:10px}
+  .info{padding:20px}
   footer{padding-bottom:110px}
   .fgrid{grid-template-columns:1fr}
+  .wafloat{display:none}
   .bnav{display:flex;position:fixed;bottom:12px;left:12px;right:12px;background:#fff;border-radius:26px;justify-content:space-around;align-items:flex-end;padding:10px 6px;box-shadow:0 -4px 24px rgba(0,0,0,.1);z-index:30}
   .bnav a{font-size:11px;color:#777;display:flex;flex-direction:column;align-items:center;gap:3px}
   .bnav a svg{width:22px;height:22px}
@@ -181,32 +223,32 @@ footer a:hover{color:#fff}
 
 <header>
   <div class="wrap head">
-    <button class="sq burger-btn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <button class="sq burger-btn" aria-label="Ouvrir le menu" onclick="openD('side')"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     <a href="#" class="brand">
-      <small>Hello, Chicken Lover! 👋</small>
-      <div class="logo">CROUSTI</div>
-      <div class="tag">Crunchy. Golden. Delicious.</div>
+      <small>Bonjour, gourmand ! 👋</small>
+      <div class="logo">DORÉ <span>Chicken</span></div>
+      <div class="tag">Croustillant. Doré. Délicieux.</div>
     </a>
     <nav class="mainnav">
-      <a href="#" class="on">Home</a><a href="#menu">Menu</a><a href="#offers">Offers</a><a href="#footer">Contact</a>
+      <a href="#">Accueil</a><a href="#menu">Menu</a><a href="#offres">Offres</a><a href="#contact">Nous trouver</a>
     </nav>
     <label class="search">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-      <input id="q" placeholder="Search for your favorite chicken...">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+      <input id="q" placeholder="Rechercher votre poulet préféré..." aria-label="Rechercher">
+      <select id="sort" aria-label="Trier"><option value="">Trier</option><option value="asc">Prix ↑</option><option value="desc">Prix ↓</option><option value="note">Mieux notés</option></select>
     </label>
-    <button class="sq" aria-label="Notifications" onclick="toast('3 nouvelles notifications')"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="badge">3</span></button>
-    <button class="sq" aria-label="Panier" onclick="openCart()"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><path d="M6 7h12l1 14H5L6 7zM9 7a3 3 0 0 1 6 0"/></svg><span class="badge cartn">0</span></button>
+    <button class="sq" aria-label="Notifications" onclick="openD('notifs');document.getElementById('nb').classList.add('zero')"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="badge" id="nb">3</span></button>
+    <button class="sq" aria-label="Panier" onclick="openD('cart')"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><path d="M6 7h12l1 14H5L6 7zM9 7a3 3 0 0 1 6 0"/></svg><span class="badge cartn zero">0</span></button>
   </div>
 </header>
 
 <main class="wrap">
   <section class="hero">
     <div class="txt">
-      <div class="lt">LIMITED TIME</div>
-      <h1>CRISPY.<br>JUICY.<br>IRRESISTIBLE.</h1>
-      <p>100% Real Chicken.<br>Made Fresh. Always.</p>
-      <button class="btn" onclick="add(0)">Order Now <i>→</i></button>
+      <div class="lt">OFFRE LIMITÉE</div>
+      <h1>CROUSTILLANT.<br>JUTEUX.<br>IRRÉSISTIBLE.</h1>
+      <p>100 % vrai poulet.<br>Préparé frais. Toujours.</p>
+      <button class="btn" onclick="add(0,true)">Commander <i>→</i></button>
     </div>
     <div class="pic" id="slides"></div>
     <div class="dots" id="dots"></div>
@@ -214,50 +256,124 @@ footer a:hover{color:#fff}
 
   <div class="cats" id="cats"></div>
 
-  <div class="sec" id="menu"><h2>Popular Combos</h2><a href="#" id="viewall">View All →</a></div>
+  <div class="sec" id="menu"><h2>Menus populaires</h2><a href="#" id="viewall">Voir tout →</a></div>
   <div class="grid" id="grid"></div>
 
-  <section class="offer" id="offers">
+  <section class="offer" id="offres">
     <div class="t">
-      <small>EXCLUSIVE OFFER</small>
-      <h4>Up to 30% OFF</h4>
-      <p>On selected combos</p>
-      <button class="btn" onclick="add(1)">Order Now <i>→</i></button>
+      <small>OFFRE EXCLUSIVE</small>
+      <h4>Jusqu'à -30 %</h4>
+      <p>Sur une sélection de menus</p>
+      <button class="btn" onclick="showPromos()">J'en profite <i>→</i></button>
     </div>
     <div class="ph"><img src="" id="offerImg" alt="Menu burger et frites"></div>
-    <div class="pct">30%<span>OFF</span></div>
+    <div class="pct">-30%<span>PROMO</span></div>
+  </section>
+
+  <div class="sec" id="contact"><h2>Nous trouver</h2><a id="itin" target="_blank" rel="noopener">Itinéraire →</a></div>
+  <section class="find">
+    <div class="info">
+      <h3>DORÉ Chicken Bouaké</h3>
+      <div class="row"><div class="ic">📍</div><div><b>Adresse</b><span>Bouaké, Côte d'Ivoire</span></div></div>
+      <div class="row"><div class="ic">📞</div><div><b>Téléphone / WhatsApp</b><a class="tel">+225 07 06 60 11 12</a></div></div>
+      <div class="row"><div class="ic">✉️</div><div><b>E-mail</b><a class="mail">voiceoftraore@gmail.com</a></div></div>
+      <div class="row"><div class="ic">🕒</div><div><b>Horaires</b><span>Tous les jours, 10 h – 23 h</span></div></div>
+      <div class="row"><div class="ic">🛵</div><div><b>Livraison</b><span>Partout à Bouaké – 1 000 FCFA</span></div></div>
+      <div class="btns">
+        <a class="btn wa wa-link" target="_blank" rel="noopener">WhatsApp <i>→</i></a>
+        <a class="btn tel">Appeler <i>📞</i></a>
+        <a class="btn ghost mail">E-mail <i>✉</i></a>
+      </div>
+    </div>
+    <div class="map"><iframe id="mapFrame" title="Carte : Bouaké" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
   </section>
 </main>
 
 <footer id="footer">
   <div class="wrap">
     <div class="fgrid">
-      <div><div class="logo">CROUSTI</div><p style="margin-top:10px;max-width:300px">Crunchy. Golden. Delicious. Du poulet frais, préparé chaque jour.</p></div>
-      <div><h5>Menu</h5><ul><li><a href="#">Buckets</a></li><li><a href="#">Burgers</a></li><li><a href="#">Sides</a></li><li><a href="#">Desserts</a></li></ul></div>
-      <div><h5>Entreprise</h5><ul><li><a href="#">À propos</a></li><li><a href="#">Restaurants</a></li><li><a href="#">Carrières</a></li></ul></div>
-      <div><h5>Aide</h5><ul><li><a href="#">Contact</a></li><li><a href="#">Livraison</a></li><li><a href="#">FAQ</a></li></ul></div>
+      <div><div class="logo">DORÉ <span>Chicken</span></div><p style="margin-top:10px;max-width:300px">Croustillant. Doré. Délicieux. Du poulet frais préparé chaque jour à Bouaké.</p></div>
+      <div><h5>Menu</h5><ul>
+        <li><a href="#menu" data-cat="buckets">Seaux</a></li><li><a href="#menu" data-cat="burgers">Burgers</a></li>
+        <li><a href="#menu" data-cat="sides">Accompagnements</a></li><li><a href="#menu" data-cat="desserts">Desserts</a></li></ul></div>
+      <div><h5>Aide</h5><ul>
+        <li><a class="wa-link" target="_blank" rel="noopener">Commander sur WhatsApp</a></li><li><a href="#contact">Livraison</a></li><li><a href="#contact">Horaires</a></li></ul></div>
+      <div><h5>Contact</h5><ul>
+        <li><a class="tel">📞 +225 07 06 60 11 12</a></li><li><a class="mail">✉️ voiceoftraore@gmail.com</a></li><li><a class="maplink" target="_blank" rel="noopener">📍 Bouaké, Côte d'Ivoire</a></li></ul></div>
     </div>
-    <div class="copy">© 2026 Crousti Chicken. Photos : Unsplash.</div>
+    <div class="copy">© 2026 DORÉ Chicken, Bouaké. Photos : Unsplash.</div>
   </div>
 </footer>
 
+<a class="wafloat wa-link" target="_blank" rel="noopener" aria-label="Écrire sur WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
+
 <nav class="bnav">
-  <a href="#" class="on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/></svg>Home</a>
+  <a href="#" class="on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/></svg>Accueil</a>
   <a href="#menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>Menu</a>
-  <a href="#" class="mid" onclick="openCart();return false"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 7h12l1 14H5L6 7zM9 7a3 3 0 0 1 6 0"/></svg>Orders<span class="badge cartn">0</span></a>
-  <a href="#offers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12V3h9l9 9-9 9z"/><circle cx="8" cy="8" r="1.5"/></svg>Offers</a>
-  <a href="#footer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</a>
+  <a href="#" class="mid" onclick="openD('cart');return false"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 7h12l1 14H5L6 7zM9 7a3 3 0 0 1 6 0"/></svg>Panier<span class="badge cartn zero">0</span></a>
+  <a href="#offres" onclick="showPromos();return false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12V3h9l9 9-9 9z"/><circle cx="8" cy="8" r="1.5"/></svg>Offres</a>
+  <a href="#contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Contact</a>
 </nav>
 
-<div class="ov" id="ov" onclick="closeCart()"></div>
-<aside class="drawer" id="drawer">
-  <div class="dh"><h3>Votre panier</h3><button class="x" onclick="closeCart()">×</button></div>
-  <div class="items" id="items"></div>
-  <div class="dfoot"><div class="tot"><span>Total</span><span id="total">$0.00</span></div><button class="btn" onclick="checkout()">Commander <i>→</i></button></div>
+<div class="ov" id="ov" onclick="closeD()"></div>
+
+<!-- Menu latéral (mobile) -->
+<aside class="drawer left" id="side">
+  <div class="dh"><div class="logo" style="font-size:22px">DORÉ <span>Chicken</span></div><button class="x" onclick="closeD()" aria-label="Fermer">×</button></div>
+  <nav class="side" onclick="if(event.target.tagName==='A')closeD()">
+    <a href="#">🏠 Accueil</a><a href="#menu">🍗 Menu</a><a href="#offres">🏷️ Offres</a><a href="#contact">📍 Nous trouver</a>
+    <a class="wa-link" target="_blank" rel="noopener">💬 WhatsApp</a><a class="tel">📞 Appeler</a><a class="mail">✉️ E-mail</a>
+  </nav>
+</aside>
+
+<!-- Notifications -->
+<aside class="drawer" id="notifs">
+  <div class="dh"><h3>Notifications</h3><button class="x" onclick="closeD()" aria-label="Fermer">×</button></div>
+  <div class="notif"><b>🔥 -30 % sur les menus</b><small>Offre valable cette semaine sur une sélection de menus.</small></div>
+  <div class="notif"><b>🛵 Livraison partout à Bouaké</b><small>1 000 FCFA seulement, commande par WhatsApp.</small></div>
+  <div class="notif"><b>🆕 Nouveau : Seau Famille</b><small>12 pièces + 4 frites pour toute la famille.</small></div>
+</aside>
+
+<!-- Panier -->
+<aside class="drawer" id="cart">
+  <div class="dh"><h3>Votre panier</h3><button class="x" onclick="closeD()" aria-label="Fermer">×</button></div>
+  <div class="items">
+    <div id="items"></div>
+    <div class="form" id="orderForm">
+      <div><label>Votre nom<input id="fName" placeholder="Ex. : Koffi Yao" autocomplete="name"></label></div>
+      <div><label>Votre téléphone<input id="fPhone" placeholder="07 00 00 00 00" inputmode="tel" autocomplete="tel"></label></div>
+      <div><label>Mode</label><div class="seg"><button class="on" data-mode="Livraison">🛵 Livraison</button><button data-mode="À emporter">🏃 À emporter</button></div></div>
+      <div id="addrBox"><label>Adresse / quartier à Bouaké<input id="fAddr" placeholder="Ex. : Commerce, près de la pharmacie"></label></div>
+      <div><label>Remarque (facultatif)<textarea id="fNote" rows="2" placeholder="Ex. : sauce piquante en plus"></textarea></label></div>
+    </div>
+  </div>
+  <div class="dfoot">
+    <div class="sub"><span>Sous-total</span><span id="subtotal">0 FCFA</span></div>
+    <div class="sub"><span>Livraison</span><span id="deliv">1 000 FCFA</span></div>
+    <div class="tot"><span>Total</span><span id="total">0 FCFA</span></div>
+    <button class="btn wa" onclick="checkout('wa')">Commander sur WhatsApp <i>→</i></button>
+    <button class="btn ghost" onclick="checkout('mail')">Commander par e-mail <i>✉</i></button>
+  </div>
 </aside>
 <div class="toast" id="toast"></div>
 
 <script>
+/* ===== Coordonnées ===== */
+const CONTACT={
+  phone:'+2250706601112', phoneTxt:'+225 07 06 60 11 12',
+  wa:'2250706601112', mail:'voiceoftraore@gmail.com',
+  place:"Bouaké, Côte d'Ivoire", delivery:1000
+};
+const waUrl=t=>`https://wa.me/${CONTACT.wa}?text=${encodeURIComponent(t)}`;
+document.querySelectorAll('.wa-link').forEach(a=>a.href=waUrl("Bonjour DORÉ Chicken, je souhaite passer une commande."));
+document.querySelectorAll('.tel').forEach(a=>a.href='tel:'+CONTACT.phone);
+document.querySelectorAll('.mail').forEach(a=>a.href=`mailto:${CONTACT.mail}?subject=${encodeURIComponent('Contact DORÉ Chicken')}`);
+const mapQ=encodeURIComponent(CONTACT.place);
+document.getElementById('mapFrame').src=`https://maps.google.com/maps?q=${mapQ}&z=13&output=embed`;
+document.querySelectorAll('#itin,.maplink').forEach(a=>a.href=`https://www.google.com/maps/dir/?api=1&destination=${mapQ}`);
+
+/* ===== Données ===== */
+const F=n=>n.toLocaleString('fr-FR').replace(/ | /g,' ')+' FCFA';
 const U=id=>`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=900&q=80`;
 const P={
   hero1:'1562967914-608f82629710', hero2:'1767065703660-7f14b6e29210', hero3:'1768204039907-77a974159ef0',
@@ -265,78 +381,104 @@ const P={
   sides:'1630384060421-cb20d0e0649d', drinks:'1570900652780-31674a93b68d', desserts:'1695886855588-47117bca2fe6',
   offer:'1767065703793-7012f5fced19'
 };
-const cats=[['all','All'],['buckets','Buckets'],['burgers','Burgers'],['snacks','Snacks'],['sides','Sides'],['drinks','Drinks'],['desserts','Desserts']];
+const cats=[['all','Tout'],['buckets','Seaux'],['burgers','Burgers'],['snacks','Snacks'],['sides','Accomp.'],['drinks','Boissons'],['desserts','Desserts']];
 const products=[
-  {n:'8 Pcs Chicken Bucket',d:'2 Large Fries + 2 Dips + 2 Drinks',r:'4.8 (12.5K+)',p:24.99,lbl:'BESTSELLER',c:'buckets',img:'1767065703660-7f14b6e29210',pop:1},
-  {n:'Zinger Burger Combo',d:'Zinger Burger + Fries + Drink',r:'4.7 (8.7K+)',p:9.99,lbl:'POPULAR',or:1,c:'burgers',img:'1767065703793-7012f5fced19',pop:1},
-  {n:'5 Pcs Hot & Crispy',d:'5 Pcs Chicken + Fries + Drink',r:'4.6 (6.3K+)',p:15.99,lbl:'SAVE 15%',c:'buckets',img:'1768204039907-77a974159ef0',pop:1},
-  {n:'Crispy Wings Box',d:'10 Wings + BBQ Dip',r:'4.7 (5.1K+)',p:12.49,c:'snacks',img:'1766589221606-08bc21fa1acd',pop:1},
-  {n:'Family Feast Bucket',d:'12 Pcs Chicken + 4 Fries',r:'4.9 (9.2K+)',p:34.99,lbl:'NEW',c:'buckets',img:'1426869981800-95ebf51ce900'},
-  {n:'Double Cheese Burger',d:'2 Patties + Cheddar + Pickles',r:'4.6 (4.4K+)',p:7.99,c:'burgers',img:'1572802419224-296b0aeee0d9'},
-  {n:'Classic Burger',d:'Lettuce + Tomato + Sauce',r:'4.5 (3.9K+)',p:5.99,c:'burgers',img:'1550547660-d9450f859349'},
-  {n:'Chicken Dippers',d:'6 Pcs + Honey Mustard',r:'4.6 (3.2K+)',p:6.49,c:'snacks',img:'1562967916-eb82221dfb92'},
-  {n:'Large Fries',d:'Golden & salted',r:'4.7 (11K+)',p:3.49,c:'sides',img:'1630384060421-cb20d0e0649d'},
-  {n:'Fries & Ketchup',d:'Medium fries + Dip',r:'4.5 (2.8K+)',p:2.99,c:'sides',img:'1518013431117-eb1465fa5752'},
-  {n:'Iced Soda',d:'Large 50cl, ice cold',r:'4.6 (7.5K+)',p:1.99,c:'drinks',img:'1570900652780-31674a93b68d'},
-  {n:'Choco Sundae',d:'Vanilla ice cream + Chocolate',r:'4.8 (4.1K+)',p:3.99,c:'desserts',img:'1695886855588-47117bca2fe6'}
+  {n:'Seau 8 pièces',d:'2 grandes frites + 2 sauces + 2 boissons',r:4.8,v:'12,5k',p:12000,old:15000,lbl:'MEILLEURE VENTE',c:'buckets',img:'1767065703660-7f14b6e29210',pop:1},
+  {n:'Menu Burger Piquant',d:'Burger poulet piquant + frites + boisson',r:4.7,v:'8,7k',p:4500,lbl:'POPULAIRE',or:1,c:'burgers',img:'1767065703793-7012f5fced19',pop:1},
+  {n:'5 pièces Hot & Crispy',d:'5 morceaux de poulet + frites + boisson',r:4.6,v:'6,3k',p:8000,old:9400,lbl:'-15 %',c:'buckets',img:'1768204039907-77a974159ef0',pop:1},
+  {n:'Box Ailes Croustillantes',d:'10 ailes + sauce barbecue',r:4.7,v:'5,1k',p:6500,old:9300,lbl:'-30 %',c:'snacks',img:'1766589221606-08bc21fa1acd',pop:1},
+  {n:'Seau Famille',d:'12 pièces de poulet + 4 frites',r:4.9,v:'9,2k',p:18000,lbl:'NOUVEAU',c:'buckets',img:'1426869981800-95ebf51ce900'},
+  {n:'Double Cheese Burger',d:'2 steaks + cheddar + cornichons',r:4.6,v:'4,4k',p:4000,c:'burgers',img:'1572802419224-296b0aeee0d9'},
+  {n:'Burger Classique',d:'Salade + tomate + sauce maison',r:4.5,v:'3,9k',p:3000,c:'burgers',img:'1550547660-d9450f859349'},
+  {n:'Tenders Poulet',d:'6 pièces + sauce miel-moutarde',r:4.6,v:'3,2k',p:3500,c:'snacks',img:'1562967916-eb82221dfb92'},
+  {n:'Grande Frite',d:'Dorée et salée',r:4.7,v:'11k',p:1500,c:'sides',img:'1630384060421-cb20d0e0649d'},
+  {n:'Frites & Ketchup',d:'Frite moyenne + sauce',r:4.5,v:'2,8k',p:1200,c:'sides',img:'1518013431117-eb1465fa5752'},
+  {n:'Soda Glacé',d:'Grand format 50 cl, bien frais',r:4.6,v:'7,5k',p:800,c:'drinks',img:'1570900652780-31674a93b68d'},
+  {n:'Sundae Chocolat',d:'Glace vanille + coulis chocolat',r:4.8,v:'4,1k',p:2000,c:'desserts',img:'1695886855588-47117bca2fe6'}
 ];
 
-/* Hero slider */
+/* ===== Bannière défilante ===== */
 const slidesEl=document.getElementById('slides'),dotsEl=document.getElementById('dots');
 ['hero1','hero2','hero3'].forEach((k,i)=>{
   slidesEl.insertAdjacentHTML('beforeend',`<div class="slide${i?'':' on'}"><img src="${U(P[k]).replace('w=900','w=1400')}" alt="Poulet frit croustillant"></div>`);
-  const b=document.createElement('button');b.className=i?'':'on';b.onclick=()=>go(i);dotsEl.appendChild(b);
+  const b=document.createElement('button');b.className=i?'':'on';b.setAttribute('aria-label','Image '+(i+1));b.onclick=()=>go(i);dotsEl.appendChild(b);
 });
 let cur=0;function go(i){slidesEl.children[cur].classList.remove('on');dotsEl.children[cur].classList.remove('on');cur=i;slidesEl.children[i].classList.add('on');dotsEl.children[i].classList.add('on')}
 setInterval(()=>go((cur+1)%3),4500);
 document.getElementById('offerImg').src=U(P.offer);
 
-/* Categories */
-const catsEl=document.getElementById('cats');let curCat='all',showAll=false;
-cats.forEach(([k,l])=>{const b=document.createElement('button');b.className='cat'+(k==='all'?' on':'');
+/* ===== Catégories & produits ===== */
+const catsEl=document.getElementById('cats');let curCat='all',showAll=false,promoOnly=false;
+function setCat(k){curCat=k;promoOnly=false;catsEl.querySelectorAll('.cat').forEach(b=>b.classList.toggle('on',b.dataset.k===k));render()}
+cats.forEach(([k,l])=>{const b=document.createElement('button');b.className='cat'+(k==='all'?' on':'');b.dataset.k=k;
   b.innerHTML=`<div class="c"><img src="${U(P[k]).replace('w=900','w=240')}" alt="${l}"></div>${l}`;
-  b.onclick=()=>{catsEl.querySelector('.on').classList.remove('on');b.classList.add('on');curCat=k;render()};catsEl.appendChild(b)});
+  b.onclick=()=>setCat(k);catsEl.appendChild(b)});
+document.querySelectorAll('[data-cat]').forEach(a=>a.addEventListener('click',()=>setCat(a.dataset.cat)));
 
-/* Products */
 const fav=new Set();
 function render(){
-  const q=document.getElementById('q').value.toLowerCase();
+  const q=document.getElementById('q').value.toLowerCase(),s=document.getElementById('sort').value;
   let list=products.map((p,i)=>({...p,i})).filter(p=>(curCat==='all'||p.c===curCat)&&(p.n+p.d).toLowerCase().includes(q));
-  if(curCat==='all'&&!q&&!showAll)list=list.filter(p=>p.pop);
-  document.querySelector('.sec h2').textContent=curCat==='all'&&!showAll&&!q?'Popular Combos':(cats.find(c=>c[0]===curCat)[1]+(curCat==='all'?' Menu':''));
+  if(promoOnly)list=list.filter(p=>p.old);
+  else if(curCat==='all'&&!q&&!showAll&&!s)list=list.filter(p=>p.pop);
+  if(s==='asc')list.sort((a,b)=>a.p-b.p);if(s==='desc')list.sort((a,b)=>b.p-a.p);if(s==='note')list.sort((a,b)=>b.r-a.r);
+  document.querySelector('#menu h2').textContent=promoOnly?'Offres en promo':(curCat==='all'&&!showAll&&!q&&!s?'Menus populaires':(curCat==='all'?'Tout le menu':cats.find(c=>c[0]===curCat)[1]));
   document.getElementById('grid').innerHTML=list.length?list.map(p=>`
     <div class="card">${p.lbl?`<span class="lbl${p.or?' or':''}">${p.lbl}</span>`:''}
-      <button class="heart${fav.has(p.i)?' on':''}" onclick="toggleFav(${p.i},this)">${fav.has(p.i)?'♥':'♡'}</button>
+      <button class="heart${fav.has(p.i)?' on':''}" onclick="toggleFav(${p.i},this)" aria-label="Favori">${fav.has(p.i)?'♥':'♡'}</button>
       <div class="img"><img src="${U(p.img)}" alt="${p.n}" loading="lazy"></div>
       <h3>${p.n.replace('&','&amp;')}</h3><div class="d">${p.d}</div>
-      <div class="r"><b>★</b> ${p.r}</div>
-      <div class="p"><strong>$${p.p.toFixed(2)}</strong><button class="plus" onclick="add(${p.i})">+</button></div>
+      <div class="r"><b>★</b> ${p.r.toString().replace('.',',')} (${p.v}+ avis)</div>
+      <div class="p"><strong>${p.p.toLocaleString('fr-FR')} <small>FCFA</small></strong><button class="plus" onclick="add(${p.i})" aria-label="Ajouter au panier">+</button></div>
     </div>`).join(''):'<p class="empty">Aucun produit trouvé.</p>';
 }
-function toggleFav(i,b){fav.has(i)?fav.delete(i):fav.add(i);b.classList.toggle('on');b.textContent=fav.has(i)?'♥':'♡'}
+function toggleFav(i,b){fav.has(i)?fav.delete(i):fav.add(i);b.classList.toggle('on');b.textContent=fav.has(i)?'♥':'♡';toast(fav.has(i)?'Ajouté aux favoris':'Retiré des favoris')}
+function showPromos(){promoOnly=true;curCat='all';catsEl.querySelectorAll('.cat').forEach(b=>b.classList.toggle('on',b.dataset.k==='all'));render();document.getElementById('menu').scrollIntoView()}
 document.getElementById('q').oninput=render;
-document.getElementById('viewall').onclick=e=>{e.preventDefault();showAll=!showAll;e.target.textContent=showAll?'Show Less ←':'View All →';render()};
+document.getElementById('sort').onchange=render;
+document.getElementById('viewall').onclick=e=>{e.preventDefault();promoOnly=false;showAll=!showAll;e.target.textContent=showAll?'Voir moins ←':'Voir tout →';render()};
 render();
 
-/* Cart */
-const cart={};
-function add(i){cart[i]=(cart[i]||0)+1;updateCart();toast(products[i].n+' ajouté au panier')}
+/* ===== Panier ===== */
+const cart={};let mode='Livraison';
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.seg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');mode=b.dataset.mode;
+  document.getElementById('addrBox').style.display=mode==='Livraison'?'':'none';updateCart()});
+function add(i,open){cart[i]=(cart[i]||0)+1;updateCart();toast(products[i].n+' ajouté au panier');if(open)openD('cart')}
 function chg(i,d){cart[i]+=d;if(cart[i]<=0)delete cart[i];updateCart()}
+function totals(){let n=0,s=0;for(const i in cart){n+=cart[i];s+=products[i].p*cart[i]}const dl=mode==='Livraison'&&n?CONTACT.delivery:0;return{n,s,dl,t:s+dl}}
 function updateCart(){
-  const ks=Object.keys(cart);let n=0,t=0;
-  document.getElementById('items').innerHTML=ks.length?ks.map(i=>{const p=products[i];n+=cart[i];t+=p.p*cart[i];
-    return `<div class="it"><img src="${U(p.img).replace('w=900','w=160')}" alt=""><div>${p.n}<br><small>$${p.p.toFixed(2)}</small></div>
-    <div class="qty"><button onclick="chg(${i},-1)">−</button>${cart[i]}<button onclick="chg(${i},1)">+</button></div></div>`}).join(''):'<p class="empty">Votre panier est vide.</p>';
-  document.querySelectorAll('.cartn').forEach(b=>b.textContent=n);
-  document.getElementById('total').textContent='$'+t.toFixed(2);
+  const ks=Object.keys(cart),{n,s,dl,t}=totals();
+  document.getElementById('items').innerHTML=ks.length?ks.map(i=>{const p=products[i];
+    return `<div class="it"><img src="${U(p.img).replace('w=900','w=160')}" alt=""><div>${p.n}<br><small>${F(p.p)}</small></div>
+    <div class="qty"><button onclick="chg(${i},-1)" aria-label="Moins">−</button>${cart[i]}<button onclick="chg(${i},1)" aria-label="Plus">+</button></div></div>`}).join(''):'<p class="empty">Votre panier est vide.<br>Ajoutez un produit avec le bouton +</p>';
+  document.getElementById('orderForm').style.display=ks.length?'':'none';
+  document.querySelectorAll('.cartn').forEach(b=>{b.textContent=n;b.classList.toggle('zero',!n)});
+  document.getElementById('subtotal').textContent=F(s);
+  document.getElementById('deliv').textContent=mode==='Livraison'?F(n?CONTACT.delivery:0):'Gratuit';
+  document.getElementById('total').textContent=F(t);
 }
-function openCart(){document.getElementById('drawer').classList.add('on');document.getElementById('ov').classList.add('on')}
-function closeCart(){document.getElementById('drawer').classList.remove('on');document.getElementById('ov').classList.remove('on')}
-function checkout(){if(!Object.keys(cart).length)return toast('Ajoutez d\'abord un produit');for(const k in cart)delete cart[k];updateCart();closeCart();toast('Commande envoyée ! 🎉')}
+function checkout(via){
+  if(!Object.keys(cart).length)return toast("Ajoutez d'abord un produit");
+  const name=fName.value.trim(),phone=fPhone.value.trim(),addr=fAddr.value.trim(),note=fNote.value.trim();
+  if(!name||!phone)return toast('Indiquez votre nom et votre téléphone');
+  if(mode==='Livraison'&&!addr)return toast('Indiquez votre adresse de livraison');
+  const {s,dl,t}=totals();
+  const lines=Object.keys(cart).map(i=>`• ${cart[i]} x ${products[i].n} = ${F(products[i].p*cart[i])}`).join('\n');
+  const msg=`Bonjour DORÉ Chicken, voici ma commande :\n\n${lines}\n\nSous-total : ${F(s)}\nLivraison : ${F(dl)}\nTOTAL : ${F(t)}\n\nNom : ${name}\nTéléphone : ${phone}\nMode : ${mode}${mode==='Livraison'?'\nAdresse : '+addr:''}${note?'\nRemarque : '+note:''}`;
+  if(via==='wa')window.open(waUrl(msg),'_blank');
+  else location.href=`mailto:${CONTACT.mail}?subject=${encodeURIComponent('Nouvelle commande – '+name)}&body=${encodeURIComponent(msg)}`;
+  toast('Commande prête à envoyer ! 🎉');
+}
 updateCart();
 
+/* ===== Tiroirs ===== */
+const ov=document.getElementById('ov');
+function openD(id){closeD();document.getElementById(id).classList.add('on');ov.classList.add('on')}
+function closeD(){document.querySelectorAll('.drawer.on').forEach(d=>d.classList.remove('on'));ov.classList.remove('on')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeD()});
+
 const toastEl=document.getElementById('toast');let tt;
-function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove('show'),1800)}
+function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove('show'),2000)}
 </script>
 </body>
 </html>
