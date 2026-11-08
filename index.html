@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crousti Chicken</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#d7261e;--red-dark:#7a100c;--cream:#fbf1e6;--cream2:#f6e4d3;--text:#1d1d1d;--muted:#7a7a7a;--orange:#f08a1c;--star:#f5a623;--r:22px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Poppins,sans-serif;background:var(--cream);color:var(--text)}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* Header */
+header{position:sticky;top:0;z-index:20;background:rgba(251,241,230,.92);backdrop-filter:blur(10px)}
+.head{display:flex;align-items:center;gap:18px;height:84px}
+.sq{width:48px;height:48px;border-radius:15px;background:#fff;display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.06);position:relative;flex-shrink:0;border:0}
+.sq svg{width:22px;height:22px}
+.badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:grid;place-items:center;padding:0 4px}
+.brand{line-height:1.15}
+.brand small{font-size:12px;display:block}
+.logo{font-family:Oswald,sans-serif;font-style:italic;color:var(--red);font-size:28px;letter-spacing:.5px;font-weight:700}
+.brand .tag{font-size:12px}
+.mainnav{display:flex;gap:26px;margin-left:24px;font-size:14px;font-weight:500}
+.mainnav a:hover,.mainnav a.on{color:var(--red)}
+.search{flex:1;display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:0 16px;height:48px;box-shadow:0 4px 14px rgba(0,0,0,.05);max-width:380px;margin-left:auto}
+.search input{border:0;outline:0;font:inherit;font-size:13px;flex:1;background:none}
+.burger-btn{display:none}
+
+/* Hero */
+.hero{margin-top:10px;border-radius:28px;background:radial-gradient(circle at 72% 45%,#c8261d,var(--red-dark) 72%);color:#fff;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1.1fr;min-height:420px}
+.hero .txt{padding:56px 0 56px 56px;align-self:center;position:relative;z-index:2}
+.hero .lt{font-size:12px;font-weight:600;letter-spacing:1px}
+.hero h1{font-family:Oswald,sans-serif;font-size:64px;line-height:1.02;margin:12px 0 16px}
+.hero p{font-size:16px;line-height:1.5;opacity:.95}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--red);color:#fff;border:0;border-radius:30px;padding:10px 10px 10px 22px;font-weight:600;font-size:15px;margin-top:24px;box-shadow:0 6px 16px rgba(0,0,0,.2);transition:.2s}
+.btn:hover{transform:translateY(-2px)}
+.btn i{width:28px;height:28px;background:#fff;color:var(--red);border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700}
+.hero .pic{position:relative}
+.hero .slide{position:absolute;inset:0;opacity:0;transition:opacity .8s}
+.hero .slide.on{opacity:1}
+.hero .slide img{width:100%;height:100%;object-fit:cover;-webkit-mask-image:linear-gradient(90deg,transparent,#000 30%);mask-image:linear-gradient(90deg,transparent,#000 30%)}
+.dots{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:3}
+.dots button{width:8px;height:8px;border-radius:5px;background:#fff;border:0;opacity:.85;transition:.3s;padding:0}
+.dots button.on{background:var(--red);width:22px;opacity:1}
+
+/* Categories */
+.cats{display:flex;justify-content:space-between;gap:14px;padding:34px 0 10px;overflow-x:auto;scrollbar-width:none}
+.cat{text-align:center;font-size:14px;flex-shrink:0;cursor:pointer;background:none;border:0;color:inherit}
+.cat .c{width:96px;height:96px;border-radius:50%;background:#fff;overflow:hidden;margin:0 auto 10px;box-shadow:0 6px 16px rgba(0,0,0,.06);border:3px solid transparent;transition:.2s;padding:4px}
+.cat .c img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.cat:hover .c{transform:translateY(-3px)}
+.cat.on .c{border-color:var(--red)}
+.cat.on{color:var(--red);font-weight:600}
+
+/* Section head */
+.sec{display:flex;justify-content:space-between;align-items:center;padding:34px 0 18px}
+.sec h2{font-size:26px;font-weight:600}
+.sec a{color:var(--red);font-size:15px;font-weight:500}
+
+/* Cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
+.card{background:#fff;border-radius:var(--r);padding:14px;box-shadow:0 6px 18px rgba(0,0,0,.05);position:relative;transition:.25s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(0,0,0,.09)}
+.card .lbl{position:absolute;top:24px;left:24px;font-size:11px;font-weight:700;color:#fff;background:var(--red);border-radius:12px;padding:4px 10px;z-index:2}
+.card .lbl.or{background:var(--orange)}
+.heart{position:absolute;top:22px;right:22px;width:34px;height:34px;border-radius:50%;background:#fff;border:0;font-size:17px;color:#666;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.heart.on{color:var(--red)}
+.card .img{border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:var(--cream2)}
+.card .img img{width:100%;height:100%;object-fit:cover;transition:.4s}
+.card:hover .img img{transform:scale(1.05)}
+.card h3{font-size:17px;font-weight:600;margin-top:14px}
+.card .d{font-size:13px;color:var(--muted);line-height:1.45;margin:4px 0 8px;flex:1}
+.card .r{font-size:13px;color:var(--muted)}
+.card .r b{color:var(--star)}
+.card .p{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.card .p strong{font-size:22px}
+.plus{width:38px;height:38px;border-radius:50%;background:var(--red);color:#fff;border:0;font-size:22px;line-height:1;transition:.2s}
+.plus:hover{transform:scale(1.1)}
+
+/* Offer */
+.offer{margin-top:44px;border-radius:28px;background:linear-gradient(90deg,#f8e6d6,#f1d3bb);padding:40px 48px;position:relative;overflow:hidden;display:flex;align-items:center;min-height:220px}
+.offer .t{position:relative;z-index:2}
+.offer small{color:var(--red);font-size:13px;font-weight:600;letter-spacing:.5px}
+.offer h4{font-size:38px;font-weight:700;margin:4px 0}
+.offer p{font-size:16px}
+.offer .ph{position:absolute;right:140px;top:0;bottom:0;width:45%;-webkit-mask-image:linear-gradient(90deg,transparent,#000 35%);mask-image:linear-gradient(90deg,transparent,#000 35%)}
+.offer .ph img{width:100%;height:100%;object-fit:cover}
+.offer .pct{position:absolute;right:36px;top:50%;transform:translateY(-50%);width:130px;height:130px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-content:center;text-align:center;line-height:1;font-weight:800;font-size:40px;box-shadow:0 10px 24px rgba(215,38,30,.35);z-index:2}
+.offer .pct span{font-size:20px;display:block;margin-top:4px}
+
+/* Footer */
+footer{margin-top:70px;background:#1d1414;color:#d9cfc6;padding:50px 0 30px;font-size:14px}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+footer h5{color:#fff;font-size:15px;margin-bottom:12px}
+footer li{list-style:none;margin:7px 0}
+footer a:hover{color:#fff}
+.copy{border-top:1px solid #3a2d2d;margin-top:30px;padding-top:20px;font-size:12px;opacity:.7}
+
+/* Cart drawer */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.3s;z-index:40}
+.ov.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:380px;max-width:92vw;background:#fff;z-index:50;transform:translateX(100%);transition:.35s;display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.drawer .dh{display:flex;justify-content:space-between;align-items:center;padding:22px;border-bottom:1px solid #eee}
+.drawer .dh h3{font-size:20px}
+.drawer .x{border:0;background:none;font-size:26px}
+.items{flex:1;overflow:auto;padding:12px 22px}
+.it{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #f2f2f2}
+.it img{width:62px;height:62px;border-radius:12px;object-fit:cover}
+.it div{flex:1;font-size:14px}
+.it small{color:var(--muted)}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:26px;height:26px;border-radius:50%;border:1px solid #ddd;background:#fff}
+.dfoot{padding:22px;border-top:1px solid #eee}
+.dfoot .tot{display:flex;justify-content:space-between;font-size:18px;font-weight:700;margin-bottom:14px}
+.dfoot .btn{width:100%;justify-content:center;margin:0}
+.empty{text-align:center;color:var(--muted);padding:40px 0}
+
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(30px);background:#222;color:#fff;padding:12px 20px;border-radius:24px;font-size:14px;transition:.3s;opacity:0;z-index:60;pointer-events:none}
+.toast.show{transform:translateX(-50%);opacity:1}
+
+/* Mobile bottom nav */
+.bnav{display:none}
+
+@media(max-width:980px){
+  .mainnav{display:none}
+  .hero{grid-template-columns:1fr}
+  .hero .txt{padding:36px 28px 40px}
+  .hero .pic{position:absolute;inset:0 0 0 35%;opacity:.95}
+  .hero h1{font-size:46px}
+  .fgrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .wrap{padding:0 16px}
+  .head{height:auto;padding:14px 0;flex-wrap:wrap;gap:12px}
+  .burger-btn{display:grid}
+  .brand{flex:1}
+  .search{order:5;max-width:none;flex-basis:100%;margin:0}
+  .hero{min-height:260px;border-radius:22px}
+  .hero .txt{padding:24px 20px 34px}
+  .hero h1{font-size:32px}
+  .hero p{font-size:12px}
+  .hero .btn{font-size:13px;padding:7px 7px 7px 16px;margin-top:16px}
+  .hero .pic{inset:0 0 0 40%}
+  .cats{justify-content:flex-start;padding-top:22px}
+  .cat{font-size:12px}
+  .cat .c{width:62px;height:62px;padding:2px}
+  .sec h2{font-size:18px}.sec a{font-size:13px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .card{padding:10px}
+  .card .lbl{top:16px;left:16px;font-size:9px;padding:3px 7px}
+  .heart{top:14px;right:14px;width:28px;height:28px;font-size:14px}
+  .card h3{font-size:13px;margin-top:10px}
+  .card .d,.card .r{font-size:11px}
+  .card .p strong{font-size:16px}
+  .plus{width:30px;height:30px;font-size:18px}
+  .offer{padding:22px;min-height:150px;margin-top:28px;border-radius:20px}
+  .offer h4{font-size:22px}.offer p{font-size:12px}.offer small{font-size:10px}
+  .offer .btn{font-size:12px;padding:6px 6px 6px 14px;margin-top:12px}
+  .offer .btn i{width:20px;height:20px}
+  .offer .ph{right:60px;width:45%}
+  .offer .pct{width:72px;height:72px;font-size:22px;right:14px}
+  .offer .pct span{font-size:12px}
+  footer{padding-bottom:110px}
+  .fgrid{grid-template-columns:1fr}
+  .bnav{display:flex;position:fixed;bottom:12px;left:12px;right:12px;background:#fff;border-radius:26px;justify-content:space-around;align-items:flex-end;padding:10px 6px;box-shadow:0 -4px 24px rgba(0,0,0,.1);z-index:30}
+  .bnav a{font-size:11px;color:#777;display:flex;flex-direction:column;align-items:center;gap:3px}
+  .bnav a svg{width:22px;height:22px}
+  .bnav a.on{color:var(--red);font-weight:600}
+  .bnav .mid{background:var(--red);color:#fff;width:66px;height:66px;border-radius:50%;margin-top:-34px;justify-content:center;box-shadow:0 6px 16px rgba(215,38,30,.4);border:4px solid var(--cream);position:relative}
+  .bnav .mid .badge{top:0;right:0}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap head">
+    <button class="sq burger-btn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <a href="#" class="brand">
+      <small>Hello, Chicken Lover! 👋</small>
+      <div class="logo">CROUSTI</div>
+      <div class="tag">Crunchy. Golden. Delicious.</div>
+    </a>
+    <nav class="mainnav">
+      <a href="#" class="on">Home</a><a href="#menu">Menu</a><a href="#offers">Offers</a><a href="#footer">Contact</a>
+    </nav>
+    <label class="search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      <input id="q" placeholder="Search for your favorite chicken...">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+    </label>
+    <button class="sq" aria-label="Notifications" onclick="toast('3 nouvelles notifications')"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="badge">3</span></button>
+    <button class="sq" aria-label="Panier" onclick="openCart()"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><path d="M6 7h12l1 14H5L6 7zM9 7a3 3 0 0 1 6 0"/></svg><span class="badge cartn">0</span></button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="txt">
+      <div class="lt">LIMITED TIME</div>
+      <h1>CRISPY.<br>JUICY.<br>IRRESISTIBLE.</h1>
+      <p>100% Real Chicken.<br>Made Fresh. Always.</p>
+      <button class="btn" onclick="add(0)">Order Now <i>→</i></button>
+    </div>
+    <div class="pic" id="slides"></div>
+    <div class="dots" id="dots"></div>
+  </section>
+
+  <div class="cats" id="cats"></div>
+
+  <div class="sec" id="menu"><h2>Popular Combos</h2><a href="#" id="viewall">View All →</a></div>
+  <div class="grid" id="grid"></div>
+
+  <section class="offer" id="offers">
+    <div class="t">
+      <small>EXCLUSIVE OFFER</small>
+      <h4>Up to 30% OFF</h4>
+      <p>On selected combos</p>
+      <button class="btn" onclick="add(1)">Order Now <i>→</i></button>
+    </div>
+    <div class="ph"><img src="" id="offerImg" alt="Menu burger et frites"></div>
+    <div class="pct">30%<span>OFF</span></div>
+  </section>
+</main>
+
+<footer id="footer">
+  <div class="wrap">
+    <div class="fgrid">
+      <div><div class="logo">CROUSTI</div><p style="margin-top:10px;max-width:300px">Crunchy. Golden. Delicious. Du poulet frais, préparé chaque jour.</p></div>
+      <div><h5>Menu</h5><ul><li><a href="#">Buckets</a></li><li><a href="#">Burgers</a></li><li><a href="#">Sides</a></li><li><a href="#">Desserts</a></li></ul></div>
+      <div><h5>Entreprise</h5><ul><li><a href="#">À propos</a></li><li><a href="#">Restaurants</a></li><li><a href="#">Carrières</a></li></ul></div>
+      <div><h5>Aide</h5><ul><li><a href="#">Contact</a></li><li><a href="#">Livraison</a></li><li><a href="#">FAQ</a></li></ul></div>
+    </div>
+    <div class="copy">© 2026 Crousti Chicken. Photos : Unsplash.</div>
+  </div>
+</footer>
+
+<nav class="bnav">
+  <a href="#" class="on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/></svg>Home</a>
+  <a href="#menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>Menu</a>
+  <a href="#" class="mid" onclick="openCart();return false"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 7h12l1 14H5L6 7zM9 7a3 3 0 0 1 6 0"/></svg>Orders<span class="badge cartn">0</span></a>
+  <a href="#offers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12V3h9l9 9-9 9z"/><circle cx="8" cy="8" r="1.5"/></svg>Offers</a>
+  <a href="#footer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</a>
+</nav>
+
+<div class="ov" id="ov" onclick="closeCart()"></div>
+<aside class="drawer" id="drawer">
+  <div class="dh"><h3>Votre panier</h3><button class="x" onclick="closeCart()">×</button></div>
+  <div class="items" id="items"></div>
+  <div class="dfoot"><div class="tot"><span>Total</span><span id="total">$0.00</span></div><button class="btn" onclick="checkout()">Commander <i>→</i></button></div>
+</aside>
+<div class="toast" id="toast"></div>
+
+<script>
+const U=id=>`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=900&q=80`;
+const P={
+  hero1:'1562967914-608f82629710', hero2:'1767065703660-7f14b6e29210', hero3:'1768204039907-77a974159ef0',
+  all:'1585703900468-13c7a978ad86', buckets:'1426869981800-95ebf51ce900', burgers:'1568901346375-23c9450c58cd', snacks:'1562967916-eb82221dfb92',
+  sides:'1630384060421-cb20d0e0649d', drinks:'1570900652780-31674a93b68d', desserts:'1695886855588-47117bca2fe6',
+  offer:'1767065703793-7012f5fced19'
+};
+const cats=[['all','All'],['buckets','Buckets'],['burgers','Burgers'],['snacks','Snacks'],['sides','Sides'],['drinks','Drinks'],['desserts','Desserts']];
+const products=[
+  {n:'8 Pcs Chicken Bucket',d:'2 Large Fries + 2 Dips + 2 Drinks',r:'4.8 (12.5K+)',p:24.99,lbl:'BESTSELLER',c:'buckets',img:'1767065703660-7f14b6e29210',pop:1},
+  {n:'Zinger Burger Combo',d:'Zinger Burger + Fries + Drink',r:'4.7 (8.7K+)',p:9.99,lbl:'POPULAR',or:1,c:'burgers',img:'1767065703793-7012f5fced19',pop:1},
+  {n:'5 Pcs Hot & Crispy',d:'5 Pcs Chicken + Fries + Drink',r:'4.6 (6.3K+)',p:15.99,lbl:'SAVE 15%',c:'buckets',img:'1768204039907-77a974159ef0',pop:1},
+  {n:'Crispy Wings Box',d:'10 Wings + BBQ Dip',r:'4.7 (5.1K+)',p:12.49,c:'snacks',img:'1766589221606-08bc21fa1acd',pop:1},
+  {n:'Family Feast Bucket',d:'12 Pcs Chicken + 4 Fries',r:'4.9 (9.2K+)',p:34.99,lbl:'NEW',c:'buckets',img:'1426869981800-95ebf51ce900'},
+  {n:'Double Cheese Burger',d:'2 Patties + Cheddar + Pickles',r:'4.6 (4.4K+)',p:7.99,c:'burgers',img:'1572802419224-296b0aeee0d9'},
+  {n:'Classic Burger',d:'Lettuce + Tomato + Sauce',r:'4.5 (3.9K+)',p:5.99,c:'burgers',img:'1550547660-d9450f859349'},
+  {n:'Chicken Dippers',d:'6 Pcs + Honey Mustard',r:'4.6 (3.2K+)',p:6.49,c:'snacks',img:'1562967916-eb82221dfb92'},
+  {n:'Large Fries',d:'Golden & salted',r:'4.7 (11K+)',p:3.49,c:'sides',img:'1630384060421-cb20d0e0649d'},
+  {n:'Fries & Ketchup',d:'Medium fries + Dip',r:'4.5 (2.8K+)',p:2.99,c:'sides',img:'1518013431117-eb1465fa5752'},
+  {n:'Iced Soda',d:'Large 50cl, ice cold',r:'4.6 (7.5K+)',p:1.99,c:'drinks',img:'1570900652780-31674a93b68d'},
+  {n:'Choco Sundae',d:'Vanilla ice cream + Chocolate',r:'4.8 (4.1K+)',p:3.99,c:'desserts',img:'1695886855588-47117bca2fe6'}
+];
+
+/* Hero slider */
+const slidesEl=document.getElementById('slides'),dotsEl=document.getElementById('dots');
+['hero1','hero2','hero3'].forEach((k,i)=>{
+  slidesEl.insertAdjacentHTML('beforeend',`<div class="slide${i?'':' on'}"><img src="${U(P[k]).replace('w=900','w=1400')}" alt="Poulet frit croustillant"></div>`);
+  const b=document.createElement('button');b.className=i?'':'on';b.onclick=()=>go(i);dotsEl.appendChild(b);
+});
+let cur=0;function go(i){slidesEl.children[cur].classList.remove('on');dotsEl.children[cur].classList.remove('on');cur=i;slidesEl.children[i].classList.add('on');dotsEl.children[i].classList.add('on')}
+setInterval(()=>go((cur+1)%3),4500);
+document.getElementById('offerImg').src=U(P.offer);
+
+/* Categories */
+const catsEl=document.getElementById('cats');let curCat='all',showAll=false;
+cats.forEach(([k,l])=>{const b=document.createElement('button');b.className='cat'+(k==='all'?' on':'');
+  b.innerHTML=`<div class="c"><img src="${U(P[k]).replace('w=900','w=240')}" alt="${l}"></div>${l}`;
+  b.onclick=()=>{catsEl.querySelector('.on').classList.remove('on');b.classList.add('on');curCat=k;render()};catsEl.appendChild(b)});
+
+/* Products */
+const fav=new Set();
+function render(){
+  const q=document.getElementById('q').value.toLowerCase();
+  let list=products.map((p,i)=>({...p,i})).filter(p=>(curCat==='all'||p.c===curCat)&&(p.n+p.d).toLowerCase().includes(q));
+  if(curCat==='all'&&!q&&!showAll)list=list.filter(p=>p.pop);
+  document.querySelector('.sec h2').textContent=curCat==='all'&&!showAll&&!q?'Popular Combos':(cats.find(c=>c[0]===curCat)[1]+(curCat==='all'?' Menu':''));
+  document.getElementById('grid').innerHTML=list.length?list.map(p=>`
+    <div class="card">${p.lbl?`<span class="lbl${p.or?' or':''}">${p.lbl}</span>`:''}
+      <button class="heart${fav.has(p.i)?' on':''}" onclick="toggleFav(${p.i},this)">${fav.has(p.i)?'♥':'♡'}</button>
+      <div class="img"><img src="${U(p.img)}" alt="${p.n}" loading="lazy"></div>
+      <h3>${p.n.replace('&','&amp;')}</h3><div class="d">${p.d}</div>
+      <div class="r"><b>★</b> ${p.r}</div>
+      <div class="p"><strong>$${p.p.toFixed(2)}</strong><button class="plus" onclick="add(${p.i})">+</button></div>
+    </div>`).join(''):'<p class="empty">Aucun produit trouvé.</p>';
+}
+function toggleFav(i,b){fav.has(i)?fav.delete(i):fav.add(i);b.classList.toggle('on');b.textContent=fav.has(i)?'♥':'♡'}
+document.getElementById('q').oninput=render;
+document.getElementById('viewall').onclick=e=>{e.preventDefault();showAll=!showAll;e.target.textContent=showAll?'Show Less ←':'View All →';render()};
+render();
+
+/* Cart */
+const cart={};
+function add(i){cart[i]=(cart[i]||0)+1;updateCart();toast(products[i].n+' ajouté au panier')}
+function chg(i,d){cart[i]+=d;if(cart[i]<=0)delete cart[i];updateCart()}
+function updateCart(){
+  const ks=Object.keys(cart);let n=0,t=0;
+  document.getElementById('items').innerHTML=ks.length?ks.map(i=>{const p=products[i];n+=cart[i];t+=p.p*cart[i];
+    return `<div class="it"><img src="${U(p.img).replace('w=900','w=160')}" alt=""><div>${p.n}<br><small>$${p.p.toFixed(2)}</small></div>
+    <div class="qty"><button onclick="chg(${i},-1)">−</button>${cart[i]}<button onclick="chg(${i},1)">+</button></div></div>`}).join(''):'<p class="empty">Votre panier est vide.</p>';
+  document.querySelectorAll('.cartn').forEach(b=>b.textContent=n);
+  document.getElementById('total').textContent='$'+t.toFixed(2);
+}
+function openCart(){document.getElementById('drawer').classList.add('on');document.getElementById('ov').classList.add('on')}
+function closeCart(){document.getElementById('drawer').classList.remove('on');document.getElementById('ov').classList.remove('on')}
+function checkout(){if(!Object.keys(cart).length)return toast('Ajoutez d\'abord un produit');for(const k in cart)delete cart[k];updateCart();closeCart();toast('Commande envoyée ! 🎉')}
+updateCart();
+
+const toastEl=document.getElementById('toast');let tt;
+function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove('show'),1800)}
+</script>
+</body>
+</html>
