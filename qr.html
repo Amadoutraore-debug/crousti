@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>QR codes des tables – DORÉ Chicken</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Oswald:wght@700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Poppins,sans-serif;background:#f3ebe3;color:#1d1d1d;padding:24px}
+.tools{max-width:900px;margin:0 auto 20px;background:#fff;border-radius:18px;padding:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.tools input{width:90px;border:1px solid #ddd;border-radius:10px;padding:10px;font:inherit}
+.btn{background:#d7261e;color:#fff;border:0;border-radius:12px;padding:10px 16px;font:600 14px Poppins;cursor:pointer}
+.grid{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.tag{background:#fff;border-radius:18px;padding:18px;text-align:center;border:3px solid #d7261e;break-inside:avoid}
+.logo{font-family:Oswald,sans-serif;font-style:italic;color:#d7261e;font-size:22px}
+.logo span{color:#f08a1c}
+.t{font-family:Oswald,sans-serif;font-size:34px;margin:4px 0 10px}
+.qr{display:flex;justify-content:center;margin-bottom:10px}
+.tag p{font-size:12px;color:#555}
+@media print{body{background:#fff;padding:0}.tools{display:none}.grid{gap:10px}}
+</style>
+</head>
+<body>
+<div class="tools">
+  <b>QR codes des tables</b>
+  <label>Nombre de tables <input id="n" type="number" min="1" max="100" value="10"></label>
+  <button class="btn" onclick="build()">Générer</button>
+  <button class="btn" onclick="print()">🖨️ Imprimer</button>
+  <span style="font-size:13px;color:#666">Collez un QR sur chaque table : le client scanne, commande, et la cuisine sait à quelle table servir.</span>
+</div>
+<div class="grid" id="grid"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const base=location.href.replace(/qr\.html.*$/,'');
+function build(){
+  const n=Math.min(100,Math.max(1,+document.getElementById('n').value||1)),g=document.getElementById('grid');g.innerHTML='';
+  for(let i=1;i<=n;i++){
+    const d=document.createElement('div');d.className='tag';
+    d.innerHTML=`<div class="logo">DORÉ <span>Chicken</span></div><div class="t">TABLE ${i}</div><div class="qr"></div><p>Scannez pour commander<br>On vous sert à table 🍗</p>`;
+    g.appendChild(d);new QRCode(d.querySelector('.qr'),{text:base+'?table='+i,width:150,height:150,correctLevel:QRCode.CorrectLevel.M});
+  }
+}
+build();
+</script>
+</body>
+</html>

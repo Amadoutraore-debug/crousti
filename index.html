@@ -147,6 +147,20 @@ footer a:hover{color:#fff}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
 .seg button{border:1px solid #e3d9cf;background:#fff;border-radius:12px;padding:10px;font-size:13px;font-weight:500}
 .seg button.on{border-color:var(--red);background:#fdecea;color:var(--red)}
+.seg3{grid-template-columns:1fr 1fr 1fr}
+.seg3 button{padding:10px 4px;font-size:12px}
+.hint{font-size:11px;color:var(--muted)}
+.tablebar{background:var(--red);color:#fff;text-align:center;font-size:13px;font-weight:600;padding:8px 12px}
+.trk .big{text-align:center;padding:26px 0 10px}
+.trk .big small{font-size:13px;color:var(--muted)}
+.trk .num{font-family:Oswald,sans-serif;font-size:48px;color:var(--red);letter-spacing:1px}
+.steps{display:grid;gap:0;margin:18px 0}
+.step{display:flex;gap:12px;align-items:center;padding:10px 0;color:#b7aca2;font-size:14px}
+.step i{width:30px;height:30px;border-radius:50%;background:#efe6dd;display:grid;place-items:center;font-style:normal;font-size:14px}
+.step.done{color:var(--text)}.step.done i{background:var(--red);color:#fff}
+.step.now{font-weight:600}
+.trk .msg{background:var(--cream);border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.5}
+.btn[disabled]{opacity:.6;pointer-events:none}
 .dfoot{padding:18px 22px;border-top:1px solid #eee;display:grid;gap:10px}
 .dfoot .tot{display:flex;justify-content:space-between;font-size:17px;font-weight:700}
 .dfoot .sub{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
@@ -221,6 +235,7 @@ footer a:hover{color:#fff}
 </head>
 <body>
 
+<div class="tablebar" id="tablebar" hidden></div>
 <header>
   <div class="wrap head">
     <button class="sq burger-btn" aria-label="Ouvrir le menu" onclick="openD('side')"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
@@ -237,6 +252,7 @@ footer a:hover{color:#fff}
       <input id="q" placeholder="Rechercher votre poulet préféré..." aria-label="Rechercher">
       <select id="sort" aria-label="Trier"><option value="">Trier</option><option value="asc">Prix ↑</option><option value="desc">Prix ↓</option><option value="note">Mieux notés</option></select>
     </label>
+    <button class="sq" aria-label="Suivre ma commande" title="Suivre ma commande" onclick="openTrack()"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 14l2 2 4-4"/></svg></button>
     <button class="sq" aria-label="Notifications" onclick="openD('notifs');document.getElementById('nb').classList.add('zero')"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="badge" id="nb">3</span></button>
     <button class="sq" aria-label="Panier" onclick="openD('cart')"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"><path d="M6 7h12l1 14H5L6 7zM9 7a3 3 0 0 1 6 0"/></svg><span class="badge cartn zero">0</span></button>
   </div>
@@ -340,10 +356,11 @@ footer a:hover{color:#fff}
   <div class="items">
     <div id="items"></div>
     <div class="form" id="orderForm">
+      <div><label>Comment souhaitez-vous être servi ?</label><div class="seg seg3"><button class="on" data-mode="sur_place">🍽️ Sur place</button><button data-mode="livraison">🛵 Livraison</button><button data-mode="emporter">🏃 À emporter</button></div></div>
+      <div id="tableBox"><label>Numéro de votre table<input id="fTable" placeholder="Ex. : 5" inputmode="numeric" maxlength="10"></label><small class="hint">On vous apporte la commande directement à table.</small></div>
       <div><label>Votre nom<input id="fName" placeholder="Ex. : Koffi Yao" autocomplete="name"></label></div>
-      <div><label>Votre téléphone<input id="fPhone" placeholder="07 00 00 00 00" inputmode="tel" autocomplete="tel"></label></div>
-      <div><label>Mode</label><div class="seg"><button class="on" data-mode="Livraison">🛵 Livraison</button><button data-mode="À emporter">🏃 À emporter</button></div></div>
-      <div id="addrBox"><label>Adresse / quartier à Bouaké<input id="fAddr" placeholder="Ex. : Commerce, près de la pharmacie"></label></div>
+      <div id="phoneBox"><label>Votre téléphone<input id="fPhone" placeholder="07 00 00 00 00" inputmode="tel" autocomplete="tel"></label></div>
+      <div id="addrBox" style="display:none"><label>Adresse / quartier à Bouaké<input id="fAddr" placeholder="Ex. : Commerce, près de la pharmacie"></label></div>
       <div><label>Remarque (facultatif)<textarea id="fNote" rows="2" placeholder="Ex. : sauce piquante en plus"></textarea></label></div>
     </div>
   </div>
@@ -351,12 +368,24 @@ footer a:hover{color:#fff}
     <div class="sub"><span>Sous-total</span><span id="subtotal">0 FCFA</span></div>
     <div class="sub"><span>Livraison</span><span id="deliv">1 000 FCFA</span></div>
     <div class="tot"><span>Total</span><span id="total">0 FCFA</span></div>
-    <button class="btn wa" onclick="checkout('wa')">Commander sur WhatsApp <i>→</i></button>
-    <button class="btn ghost" onclick="checkout('mail')">Commander par e-mail <i>✉</i></button>
+    <button class="btn" id="sendBtn" onclick="checkout()">Envoyer la commande <i>→</i></button>
+  </div>
+</aside>
+
+<!-- Confirmation & suivi -->
+<aside class="drawer" id="track">
+  <div class="dh"><h3>Ma commande</h3><button class="x" onclick="closeD()" aria-label="Fermer">×</button></div>
+  <div class="items trk">
+    <div id="trkBody"></div>
+    <div class="form" style="margin-top:18px">
+      <label>Suivre une autre commande<input id="trkInput" placeholder="Ex. : DC-00012" style="text-transform:uppercase"></label>
+      <button class="btn ghost" onclick="trackNum(trkInput.value)">Voir l'état <i>→</i></button>
+    </div>
   </div>
 </aside>
 <div class="toast" id="toast"></div>
 
+<script src="config.js"></script>
 <script>
 /* ===== Coordonnées ===== */
 const CONTACT={
@@ -440,12 +469,19 @@ document.getElementById('viewall').onclick=e=>{e.preventDefault();promoOnly=fals
 render();
 
 /* ===== Panier ===== */
-const cart={};let mode='Livraison';
-document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.seg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');mode=b.dataset.mode;
-  document.getElementById('addrBox').style.display=mode==='Livraison'?'':'none';updateCart()});
+const IDS=['seau8','burger-piquant','hot5','ailes','seau-famille','double-cheese','burger-classique','tenders','grande-frite','frites-ketchup','soda','sundae'];
+products.forEach((p,i)=>p.id=IDS[i]);
+const MODES={sur_place:'Sur place',livraison:'Livraison',emporter:'À emporter'};
+const cart={};let mode='sur_place';
+function setMode(m){mode=m;document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x.dataset.mode===m));
+  tableBox.style.display=m==='sur_place'?'':'none';addrBox.style.display=m==='livraison'?'':'none';phoneBox.style.display=m==='sur_place'?'none':'';updateCart()}
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+/* Table scannée via QR code : ?table=5 */
+const urlTable=new URLSearchParams(location.search).get('table');
+if(urlTable){fTable.value=urlTable.slice(0,10);const tb=document.getElementById('tablebar');tb.hidden=false;tb.textContent=`🍽️ Vous êtes à la table ${fTable.value} – commandez ici, on vous sert à table`;}
 function add(i,open){cart[i]=(cart[i]||0)+1;updateCart();toast(products[i].n+' ajouté au panier');if(open)openD('cart')}
 function chg(i,d){cart[i]+=d;if(cart[i]<=0)delete cart[i];updateCart()}
-function totals(){let n=0,s=0;for(const i in cart){n+=cart[i];s+=products[i].p*cart[i]}const dl=mode==='Livraison'&&n?CONTACT.delivery:0;return{n,s,dl,t:s+dl}}
+function totals(){let n=0,s=0;for(const i in cart){n+=cart[i];s+=products[i].p*cart[i]}const dl=mode==='livraison'&&n?CONTACT.delivery:0;return{n,s,dl,t:s+dl}}
 function updateCart(){
   const ks=Object.keys(cart),{n,s,dl,t}=totals();
   document.getElementById('items').innerHTML=ks.length?ks.map(i=>{const p=products[i];
@@ -454,27 +490,61 @@ function updateCart(){
   document.getElementById('orderForm').style.display=ks.length?'':'none';
   document.querySelectorAll('.cartn').forEach(b=>{b.textContent=n;b.classList.toggle('zero',!n)});
   document.getElementById('subtotal').textContent=F(s);
-  document.getElementById('deliv').textContent=mode==='Livraison'?F(n?CONTACT.delivery:0):'Gratuit';
+  document.getElementById('deliv').textContent=mode==='livraison'?F(n?CONTACT.delivery:0):'Gratuit';
   document.getElementById('total').textContent=F(t);
 }
-function checkout(via){
-  if(!Object.keys(cart).length)return toast("Ajoutez d'abord un produit");
-  const name=fName.value.trim(),phone=fPhone.value.trim(),addr=fAddr.value.trim(),note=fNote.value.trim();
-  if(!name||!phone)return toast('Indiquez votre nom et votre téléphone');
-  if(mode==='Livraison'&&!addr)return toast('Indiquez votre adresse de livraison');
-  const {s,dl,t}=totals();
-  const lines=Object.keys(cart).map(i=>`• ${cart[i]} x ${products[i].n} = ${F(products[i].p*cart[i])}`).join('\n');
-  const msg=`Bonjour DORÉ Chicken, voici ma commande :\n\n${lines}\n\nSous-total : ${F(s)}\nLivraison : ${F(dl)}\nTOTAL : ${F(t)}\n\nNom : ${name}\nTéléphone : ${phone}\nMode : ${mode}${mode==='Livraison'?'\nAdresse : '+addr:''}${note?'\nRemarque : '+note:''}`;
-  if(via==='wa')window.open(waUrl(msg),'_blank');
-  else location.href=`mailto:${CONTACT.mail}?subject=${encodeURIComponent('Nouvelle commande – '+name)}&body=${encodeURIComponent(msg)}`;
-  toast('Commande prête à envoyer ! 🎉');
+/* ===== Envoi au restaurant (base Supabase) ===== */
+const CFG=window.DORE_CONFIG||{};
+async function rpc(fn,body){
+  const r=await fetch(`${CFG.supabaseUrl}/rest/v1/rpc/${fn}`,{method:'POST',headers:{'Content-Type':'application/json',apikey:CFG.supabaseAnonKey,Authorization:'Bearer '+CFG.supabaseAnonKey},body:JSON.stringify(body)});
+  const j=await r.json().catch(()=>null);
+  if(!r.ok)throw new Error((j&&j.message)||'Erreur réseau');
+  return j;
 }
+async function checkout(){
+  if(!Object.keys(cart).length)return toast("Ajoutez d'abord un produit");
+  const name=fName.value.trim(),phone=fPhone.value.trim(),addr=fAddr.value.trim(),note=fNote.value.trim(),table=fTable.value.trim();
+  if(mode==='sur_place'&&!table)return toast('Indiquez votre numéro de table');
+  if(!name)return toast('Indiquez votre nom');
+  if(mode!=='sur_place'&&!phone)return toast('Indiquez votre téléphone');
+  if(mode==='livraison'&&!addr)return toast('Indiquez votre adresse de livraison');
+  const btn=document.getElementById('sendBtn');btn.disabled=true;btn.firstChild.textContent='Envoi en cours… ';
+  try{
+    const res=await rpc('dore_place_order',{p:{mode,table,name,phone,address:addr,note,items:Object.keys(cart).map(i=>({id:products[i].id,qty:cart[i]}))}});
+    try{localStorage.setItem('dore_last',res.numero)}catch(e){}
+    for(const k in cart)delete cart[k];fNote.value='';updateCart();
+    showTrack(res.numero,true);
+  }catch(e){toast("Envoi impossible : "+e.message+". Réessayez ou appelez-nous.")}
+  finally{btn.disabled=false;btn.firstChild.textContent='Envoyer la commande '}
+}
+
+/* ===== Suivi de commande ===== */
+const STEPS=[['nouvelle','Commande reçue','📥'],['preparation','En préparation','👨‍🍳'],['prete','Prête','✅'],['terminee','Servie / remise','🍗']];
+let trkTimer;
+function openTrack(){let n='';try{n=localStorage.getItem('dore_last')||''}catch(e){}
+  if(n)showTrack(n);else{trkBody.innerHTML='<p class="empty">Aucune commande récente.<br>Entrez votre numéro ci-dessous.</p>';openD('track')}}
+function trackNum(v){v=v.trim().toUpperCase();if(!v)return;if(/^\d+$/.test(v))v='DC-'+v.padStart(5,'0');showTrack(v)}
+async function showTrack(num,fresh){
+  openD('track');clearInterval(trkTimer);
+  const draw=async()=>{
+    let o;try{o=await rpc('dore_track',{p_numero:num})}catch(e){trkBody.innerHTML='<p class="empty">Connexion impossible.</p>';return}
+    if(!o){trkBody.innerHTML=`<p class="empty">Commande ${num} introuvable.</p>`;clearInterval(trkTimer);return}
+    const idx=STEPS.findIndex(s=>s[0]===o.status),where=o.mode==='sur_place'?`à la table ${o.table_no}`:(o.mode==='livraison'?'en livraison':'à emporter');
+    trkBody.innerHTML=`<div class="big"><small>${fresh?'Merci ! Votre numéro de commande':'Numéro de commande'}</small><div class="num">${o.numero}</div><small>${MODES[o.mode]} · ${where}</small></div>
+      ${o.status==='annulee'?'<div class="msg">❌ Cette commande a été annulée. Appelez-nous pour plus d\'infos.</div>':
+      `<div class="steps">${STEPS.map((s,i)=>`<div class="step${i<=idx?' done':''}${i===idx?' now':''}"><i>${s[2]}</i>${s[1]}</div>`).join('')}</div>
+      <div class="msg">${o.mode==='sur_place'?'Restez à votre table, un serveur vous apporte votre commande.':'Gardez ce numéro : il vous sera demandé à la remise.'} Cette page se met à jour toute seule.</div>`}`;
+    if(['terminee','annulee'].includes(o.status))clearInterval(trkTimer);
+  };
+  trkBody.innerHTML='<p class="empty">Chargement…</p>';await draw();trkTimer=setInterval(draw,10000);
+}
+setMode(mode);
 updateCart();
 
 /* ===== Tiroirs ===== */
 const ov=document.getElementById('ov');
 function openD(id){closeD();document.getElementById(id).classList.add('on');ov.classList.add('on')}
-function closeD(){document.querySelectorAll('.drawer.on').forEach(d=>d.classList.remove('on'));ov.classList.remove('on')}
+function closeD(){document.querySelectorAll('.drawer.on').forEach(d=>d.classList.remove('on'));ov.classList.remove('on');clearInterval(trkTimer)}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeD()});
 
 const toastEl=document.getElementById('toast');let tt;
