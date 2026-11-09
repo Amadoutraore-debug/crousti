@@ -21,6 +21,12 @@ button{font-family:inherit;cursor:pointer}
 .btn.alt{background:#fff;color:var(--text);border:1px solid #e3d9cf}
 .btn.sm{padding:8px 12px;font-size:13px;border-radius:10px}
 .login .btn{width:100%}
+.pw{position:relative}
+.pw input{padding-right:44px}
+.eye{position:absolute;right:6px;top:6px;border:0;background:none;font-size:18px;padding:6px}
+.links{margin:14px 0 0!important;font-size:13px}
+.links a{color:var(--red)}
+#loginMsg{margin:14px 0 0}
 /* Barre */
 .bar{position:sticky;top:0;z-index:5;background:#fff;display:flex;align-items:center;gap:14px;padding:12px 20px;box-shadow:0 2px 12px rgba(0,0,0,.06);flex-wrap:wrap}
 .bar .live{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
@@ -69,9 +75,20 @@ button{font-family:inherit;cursor:pointer}
 
 <div id="loginView" class="login" hidden>
   <div class="logo">DORÉ <span>Chicken</span></div>
-  <p>Espace cuisine : connectez-vous avec l'e-mail du restaurant. Vous recevrez un lien de connexion.</p>
-  <input id="email" type="email" placeholder="E-mail du restaurant" autocomplete="email">
-  <button class="btn" id="loginBtn">Recevoir le lien de connexion</button>
+  <form id="loginForm">
+    <p>Espace cuisine : connectez-vous avec l'e-mail et le mot de passe du restaurant.</p>
+    <input id="email" type="email" placeholder="E-mail" autocomplete="username" required>
+    <div class="pw"><input id="password" type="password" placeholder="Mot de passe" autocomplete="current-password" required><button type="button" class="eye" onclick="togglePw('password',this)" aria-label="Afficher le mot de passe">👁</button></div>
+    <button class="btn" id="loginBtn" type="submit">Se connecter</button>
+    <p class="links"><a href="#" id="forgotLink">Mot de passe oublié ?</a></p>
+  </form>
+  <form id="newPwForm" hidden>
+    <p>Choisissez votre nouveau mot de passe (8 caractères minimum).</p>
+    <div class="pw"><input id="newPw" type="password" placeholder="Nouveau mot de passe" autocomplete="new-password" minlength="8" required><button type="button" class="eye" onclick="togglePw('newPw',this)" aria-label="Afficher le mot de passe">👁</button></div>
+    <input id="newPw2" type="password" placeholder="Confirmez le mot de passe" autocomplete="new-password" minlength="8" required>
+    <button class="btn" type="submit">Enregistrer le mot de passe</button>
+    <p class="links"><a href="#" id="cancelPw">Annuler</a></p>
+  </form>
   <p id="loginMsg"></p>
 </div>
 
@@ -83,6 +100,7 @@ button{font-family:inherit;cursor:pointer}
     <div class="stats"><div>Aujourd'hui <b id="sCount">0</b></div><div>Chiffre <b id="sCa">0 FCFA</b></div></div>
     <button class="btn sm alt" id="notifBtn">🔔 Activer les alertes</button>
     <button class="btn sm alt" id="soundBtn">🔊 Son activé</button>
+    <button class="btn sm alt" id="pwBtn">🔑 Mot de passe</button>
     <button class="btn sm alt" id="logoutBtn">Déconnexion</button>
   </div>
   <div class="banner" id="banner"></div>
@@ -109,25 +127,50 @@ const NEXT={nouvelle:['preparation','Accepter & préparer'],preparation:['prete'
 let orders=new Map(),soundOn=true,channel,alertLoop;
 
 /* ===== Connexion ===== */
-$('loginBtn').onclick=async()=>{
-  const email=$('email').value.trim();if(!email)return;
-  $('loginBtn').disabled=true;$('loginMsg').textContent='Envoi…';
-  const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:location.origin+location.pathname,shouldCreateUser:true}});
+const msg=t=>{$('loginMsg').innerHTML=t};
+function togglePw(id,b){const i=$(id);i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'👁':'🙈'}
+function showPwForm(on){$('loginForm').hidden=on;$('newPwForm').hidden=!on;msg('')}
+$('loginForm').onsubmit=async e=>{
+  e.preventDefault();
+  const email=$('email').value.trim(),password=$('password').value;
+  $('loginBtn').disabled=true;msg('Connexion…');
+  const {error}=await sb.auth.signInWithPassword({email,password});
   $('loginBtn').disabled=false;
-  $('loginMsg').textContent=error?('Erreur : '+error.message):'✅ Lien envoyé ! Ouvrez votre boîte mail sur cet appareil et cliquez sur le lien.';
+  if(error)return msg(/invalid/i.test(error.message)?'❌ E-mail ou mot de passe incorrect.':'Erreur : '+esc(error.message));
+  msg('');start();
 };
+$('forgotLink').onclick=async e=>{
+  e.preventDefault();
+  const email=$('email').value.trim();if(!email)return msg('Entrez d\'abord votre e-mail ci-dessus.');
+  msg('Envoi…');
+  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+  msg(error?'Erreur : '+esc(error.message):'✅ Un e-mail vous a été envoyé : cliquez sur le lien pour choisir un nouveau mot de passe.');
+};
+$('newPwForm').onsubmit=async e=>{
+  e.preventDefault();
+  if($('newPw').value!==$('newPw2').value)return msg('❌ Les deux mots de passe ne sont pas identiques.');
+  const {error}=await sb.auth.updateUser({password:$('newPw').value});
+  if(error)return msg('Erreur : '+esc(error.message));
+  $('newPw').value=$('newPw2').value='';showPwForm(false);msg('✅ Mot de passe enregistré.');start();
+};
+$('cancelPw').onclick=e=>{e.preventDefault();showPwForm(false);start()};
+$('pwBtn').onclick=()=>{$('appView').hidden=true;$('loginView').hidden=false;showPwForm(true)};
 $('logoutBtn').onclick=async()=>{await sb.auth.signOut();location.reload()};
 
 async function start(){
   const {data:{session}}=await sb.auth.getSession();
   if(!session){$('loginView').hidden=false;$('appView').hidden=true;return}
   const {data:isStaff}=await sb.rpc('dore_is_staff');
-  if(!isStaff){$('loginView').hidden=false;$('loginMsg').innerHTML='⛔ Ce compte n\'est pas autorisé.<br><a href="#" onclick="sb.auth.signOut().then(()=>location.reload())">Changer de compte</a>';return}
+  if(!isStaff){$('loginView').hidden=false;$('appView').hidden=true;msg('⛔ Ce compte n\'est pas autorisé.<br><a href="#" onclick="sb.auth.signOut().then(()=>location.reload())">Changer de compte</a>');return}
   $('loginView').hidden=true;$('appView').hidden=false;
+  if(started)return;started=true;
   await load();subscribe();setInterval(renderAll,30000);
   updateNotifBtn();
 }
-sb.auth.onAuthStateChange((ev)=>{if(ev==='SIGNED_IN'&&$('appView').hidden)start()});
+let started=false;
+sb.auth.onAuthStateChange(ev=>{
+  if(ev==='PASSWORD_RECOVERY'){$('appView').hidden=true;$('loginView').hidden=false;showPwForm(true)}
+});
 
 /* ===== Données ===== */
 async function load(){
