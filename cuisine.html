@@ -118,6 +118,8 @@ button{font-family:inherit;cursor:pointer}
 <script src="config.js"></script>
 <script>
 const CFG=window.DORE_CONFIG;
+/* Lien « mot de passe oublié » : on le repère avant que Supabase ne lise l'adresse */
+let recoveryMode=/type=recovery/.test(location.hash)||/type=recovery/.test(location.search);
 const sb=supabase.createClient(CFG.supabaseUrl,CFG.supabaseAnonKey);
 const $=id=>document.getElementById(id);
 const F=n=>Number(n).toLocaleString('fr-FR').replace(/ | /g,' ')+' FCFA';
@@ -151,14 +153,27 @@ $('newPwForm').onsubmit=async e=>{
   if($('newPw').value!==$('newPw2').value)return msg('❌ Les deux mots de passe ne sont pas identiques.');
   const {error}=await sb.auth.updateUser({password:$('newPw').value});
   if(error)return msg('Erreur : '+esc(error.message));
-  $('newPw').value=$('newPw2').value='';showPwForm(false);msg('✅ Mot de passe enregistré.');start();
+  const {data:{user}}=await sb.auth.getUser();
+  $('newPw').value=$('newPw2').value='';
+  await sb.auth.signOut();recoveryMode=false;started=false;
+  $('appView').hidden=true;$('loginView').hidden=false;showPwForm(false);
+  if(user&&user.email)$('email').value=user.email;$('password').value='';
+  msg('✅ Mot de passe enregistré. Connectez-vous maintenant avec votre nouveau mot de passe.');
 };
-$('cancelPw').onclick=e=>{e.preventDefault();showPwForm(false);start()};
+$('cancelPw').onclick=async e=>{e.preventDefault();
+  if(recoveryMode){await sb.auth.signOut();recoveryMode=false;showPwForm(false);return}
+  showPwForm(false);start()};
 $('pwBtn').onclick=()=>{$('appView').hidden=true;$('loginView').hidden=false;showPwForm(true)};
 $('logoutBtn').onclick=async()=>{await sb.auth.signOut();location.reload()};
 
 async function start(){
   const {data:{session}}=await sb.auth.getSession();
+  if(recoveryMode){
+    history.replaceState(null,'',location.pathname);
+    $('appView').hidden=true;$('loginView').hidden=false;showPwForm(true);
+    if(!session)msg('Ce lien a expiré. Cliquez sur « Annuler » puis « Mot de passe oublié ? » pour en recevoir un nouveau.');
+    return;
+  }
   if(!session){$('loginView').hidden=false;$('appView').hidden=true;return}
   const {data:isStaff}=await sb.rpc('dore_is_staff');
   if(!isStaff){$('loginView').hidden=false;$('appView').hidden=true;msg('⛔ Ce compte n\'est pas autorisé.<br><a href="#" onclick="sb.auth.signOut().then(()=>location.reload())">Changer de compte</a>');return}
@@ -169,7 +184,7 @@ async function start(){
 }
 let started=false;
 sb.auth.onAuthStateChange(ev=>{
-  if(ev==='PASSWORD_RECOVERY'){$('appView').hidden=true;$('loginView').hidden=false;showPwForm(true)}
+  if(ev==='PASSWORD_RECOVERY'){recoveryMode=true;$('appView').hidden=true;$('loginView').hidden=false;showPwForm(true)}
 });
 
 /* ===== Données ===== */
